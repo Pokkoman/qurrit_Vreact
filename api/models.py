@@ -9,6 +9,7 @@ from rest_framework.serializers import ModelSerializer
 class Program(models.Model):
 
     name = models.CharField(max_length=100)
+    trainer_name = models.CharField(max_length=150)
     exercise_id = ArrayField(models.IntegerField())
     sets = ArrayField(models.IntegerField())
     reps = ArrayField(models.IntegerField())

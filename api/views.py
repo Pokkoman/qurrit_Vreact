@@ -10,10 +10,11 @@ from .serializers import ProgramSerializer
 def index(request):
     return HttpResponse("hello ")
 
-@api_view(['GET'])
+@api_view(['GET','PUT'])
 def getProgram_list(request):
     
     program_list= Program.objects.all()
     program_list_serializer = ProgramSerializer(program_list,many = True)
+
 
     return Response(program_list_serializer.data)
