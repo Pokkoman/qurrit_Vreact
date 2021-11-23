@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-5k7tnjlr*l+uq^222@we2p(a7pk7i_h(hh0v7kd@o0&stsc4$s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['qurrit-react.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
