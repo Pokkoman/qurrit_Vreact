@@ -7,4 +7,4 @@ from .models import *
 admin.site.register(Program)
 admin.site.register(Exercise)
 admin.site.register(MuscleList)
-admin.site.register(AltExerciseList)
+admin.site.register(Workout)
