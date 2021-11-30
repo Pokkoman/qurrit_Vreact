@@ -21,6 +21,7 @@ class Program(models.Model):
 
     program_name = models.CharField(max_length=200)
     trainer_name = models.CharField(max_length=150)
+    duration = models.IntegerField()
 
 
 class Workout(models.Model):
