@@ -32,3 +32,4 @@ class Workout(models.Model):
     sets = ArrayField(models.IntegerField())
     reps = ArrayField(models.IntegerField())
     rest = ArrayField(models.IntegerField())
+
