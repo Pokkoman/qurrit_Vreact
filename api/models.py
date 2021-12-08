@@ -8,14 +8,17 @@ from rest_framework.serializers import ModelSerializer
 
 # Create your models here.
 
+
 class Exercise(models.Model):
 
     name = models.CharField(max_length=100)
     target_muscles = ArrayField(models.CharField(max_length=50))
 
+
 class MuscleList(models.Model):
 
     name = models.CharField(max_length=50)
+
 
 class Program(models.Model):
 
@@ -26,10 +29,10 @@ class Program(models.Model):
 
 class Workout(models.Model):
 
-    program_id = models.ForeignKey(Program,on_delete=CASCADE)
+    program_id = models.ForeignKey(Program, on_delete=CASCADE)
     name = models.CharField(max_length=100)
+    day = models.IntegerField()
     exercise_id = ArrayField(models.IntegerField())
     sets = ArrayField(models.IntegerField())
     reps = ArrayField(models.IntegerField())
     rest = ArrayField(models.IntegerField())
-

@@ -76,9 +76,8 @@ def createProgram(requests):
         trainer_name=data[0]['trainer_name'],
         duration=data[0]['duration']
     )
-
+    day = 1
     for workout in data[1:]:
-
         print(workout)
         new_workout = Workout.objects.create(
             program_id=new_program,
@@ -86,7 +85,9 @@ def createProgram(requests):
             exercise_id=workout['exercise_id'],
             sets=workout['sets'],
             reps=workout['reps'],
-            rest=workout['rest']
+            rest=workout['rest'],
+            day=day
         )
+        day += 1
 
     return HttpResponse("hello")
