@@ -2,6 +2,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 # Create your views here.
 
@@ -29,5 +30,9 @@ def register(requests):
     return HttpResponse('hello')
 
 
-def login(requests):
-    pass
+@api_view(['GET'])
+def user_email_check(requests):
+
+    check_list = User.objects.values('username', 'email')
+
+    return Response(check_list)
