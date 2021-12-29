@@ -1,11 +1,11 @@
-from django.contrib.auth import models
-from django.db.models.fields.json import DataContains
+
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import *
+from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
 
@@ -43,6 +43,31 @@ def register(requests):
         trainer.save()
 
     return HttpResponse('hello')
+
+@api_view(['POST'])
+def userlogin(requests):
+    username = requests.data['username']
+    password = requests.data['password']
+
+    user = authenticate(requests,username=username,password=password)
+
+    if user is not None:
+    
+        login(requests._request,user)
+        print("user logged in")
+    else:
+        print("error")
+
+
+    return HttpResponse("hello")
+
+@api_view(["POST"])
+def userlogout(requests):
+
+    logout(requests._request)
+    
+    return HttpResponse('Logout')
+
 
 
 @api_view(['GET'])
