@@ -33,7 +33,7 @@ def register(requests):
         customer = Customer.objects.create(user=user, programs_bought=[0])
         customer.save()
     elif requests.data['user_type'] == 'Trainer':
-        user = Trainer.objects.create(
+        user = User.objects.create_user(
             username=username,
             password=password,
             email=email,
@@ -68,11 +68,25 @@ def userlogin(requests):
         except Trainer.DoesNotExist:
             userdata_trainer = None
 
-        print(userdata_customer.user.first_name)
-        print(userdata_trainer)
+        if userdata_customer is not None:
+            data = {
+                'username': userdata_customer.user.username,
+                'first_name': userdata_customer.user.first_name,
+                'last_name': userdata_customer.user.last_name,
+                'user_type': "Customer",
+                'programs': userdata_customer.programs_bought
+            }
+        elif userdata_trainer is not None:
+            data = {
+                'username': userdata_trainer.user.username,
+                'first_name': userdata_trainer.user.first_name,
+                'last_name': userdata_trainer.user.last_name,
+                'user_type': "Trainer",
+                'programs': userdata_trainer.programs_created
+            }
 
         print("user logged in")
-        return HttpResponse("hello")
+        return Response(data)
     else:
         return Response('error')
 
