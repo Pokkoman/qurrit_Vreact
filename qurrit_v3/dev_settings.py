@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'accounts',
     'knox',
+    'payment',
 ]
 
 MIDDLEWARE = [
@@ -84,10 +85,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'qurrit_react',
-        'USER' : 'postgres',
+        'USER': 'postgres',
         'PASSWORD': '5678',
-        'HOST' : 'localhost',
-        'PORT' : '5432'
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 

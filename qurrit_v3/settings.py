@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'knox',
     'accounts',
+    'payment',
 ]
 
 MIDDLEWARE = [
@@ -85,10 +86,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'd638lb0kq13bbh',
-        'USER' : 'ecryfrurcbzqib',
+        'USER': 'ecryfrurcbzqib',
         'PASSWORD': 'e4024635fef4dc86cfcc07652d2bb1d2aa8e4d2b292e47742ec3590b5ac82046',
-        'HOST' : 'ec2-35-173-207-244.compute-1.amazonaws.com',
-        'PORT' : '5432'
+        'HOST': 'ec2-35-173-207-244.compute-1.amazonaws.com',
+        'PORT': '5432'
     }
 }
 
