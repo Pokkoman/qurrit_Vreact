@@ -6,12 +6,15 @@ from django.db.models.fields.related import ForeignKey
 
 # Create your models here.
 
+
 class Customer(models.Model):
 
-    user = models.OneToOneField(User,on_delete=CASCADE)
+    user = models.OneToOneField(User, on_delete=CASCADE)
     programs_bought = ArrayField(models.IntegerField())
+
 
 class Trainer(models.Model):
 
-    user = models.OneToOneField(User,on_delete=CASCADE)
+    user = models.OneToOneField(User, on_delete=CASCADE)
     programs_created = ArrayField(models.IntegerField())
+    wallet = models.IntegerField(default=0, blank=True, null=True)

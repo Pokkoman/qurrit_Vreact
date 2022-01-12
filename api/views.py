@@ -74,7 +74,8 @@ def createProgram(requests):
     new_program = Program.objects.create(
         program_name=data[0]['program_name'],
         trainer_name=data[0]['trainer_name'],
-        duration=data[0]['duration']
+        duration=data[0]['duration'],
+        cost=data[0]['cost'],
     )
     day = 1
     for workout in data[1:]:
