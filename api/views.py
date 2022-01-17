@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view
 
 from .models import *
 from .serializers import *
+from accounts.models import Trainer
 # Create your views here.
 
 
@@ -71,11 +72,13 @@ def createProgram(requests):
 
     data = requests.data
     print(data)
+    trainer_id = data[0]['trainer_id']
     new_program = Program.objects.create(
         program_name=data[0]['program_name'],
         trainer_name=data[0]['trainer_name'],
         duration=data[0]['duration'],
         cost=data[0]['cost'],
+
     )
     day = 1
     for workout in data[1:]:
@@ -90,5 +93,9 @@ def createProgram(requests):
             day=day
         )
         day += 1
+
+    trainer = Trainer.objects.all().get(id=trainer_id)
+    trainer.programs_created.append(new_program.id)
+    trainer.save()
 
     return HttpResponse("hello")
