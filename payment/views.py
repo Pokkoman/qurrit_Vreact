@@ -24,7 +24,7 @@ def create_payment(requests):
 
         intent = stripe.PaymentIntent.create(
             amount=cost,
-            currency='inr',
+            currency='usd',
             automatic_payment_methods={
                 'enabled': True
             },
