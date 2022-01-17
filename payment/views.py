@@ -8,7 +8,7 @@ from api.models import Workout, Program
 
 # Create your views here.
 
-stripe.api_key = 'sk_test_51KIyg3SED7tS9grbSn5duWOKrvE5nXqVDkYHIg6LBeKXJloSmKG6sgw9azzXcadwajn7ajfsXfbtTgtf1FuTUMK900Xnzz04V7'
+stripe.api_key = 'sk_test_tR3PYbcVNZZ796tH88S4VQ2u'
 
 
 @api_view(['POST'])
@@ -17,7 +17,10 @@ def create_payment(requests):
         data = requests.data
 
         program = Program.objects.get(id=data['programId'])
-        cost = program.cost
+        if program.cost == 0:
+            cost = 2
+        else:
+            cost = program.cost
 
         intent = stripe.PaymentIntent.create(
             amount=cost,
