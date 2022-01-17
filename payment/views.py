@@ -14,12 +14,7 @@ stripe.api_key = 'sk_test_tR3PYbcVNZZ796tH88S4VQ2u'
 @api_view(['POST'])
 def create_payment(requests):
     try:
-        # data = requests.data
-
-        data = {
-            'programId': 2,
-            'userId': 2
-        }
+        data = requests.data
 
         program = Program.objects.get(id=data['programId'])
         cost = program.cost
