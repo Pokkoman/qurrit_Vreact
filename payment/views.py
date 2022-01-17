@@ -8,7 +8,7 @@ from api.models import Workout, Program
 
 # Create your views here.
 
-stripe.api_key = 'sk_test_tR3PYbcVNZZ796tH88S4VQ2u'
+stripe.api_key = 'sk_test_51KIyg3SED7tS9grbSn5duWOKrvE5nXqVDkYHIg6LBeKXJloSmKG6sgw9azzXcadwajn7ajfsXfbtTgtf1FuTUMK900Xnzz04V7'
 
 
 @api_view(['POST'])
