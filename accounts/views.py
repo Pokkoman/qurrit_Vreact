@@ -1,9 +1,12 @@
+from modulefinder import ReplacePackage
 from django.http import response
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.models import User, UserManager
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
+from api.models import Program
 from .models import *
 from django.contrib.auth import authenticate, login, logout
 
@@ -123,6 +126,22 @@ def user_profile(requests):
             'last_name': user.last_name,
             'programs': trainer.programs_created}
     except Exception as e:
-        return Response(None)
+        return Response(None, status=204)
 
     return Response(response)
+
+
+@api_view(['GET'])
+def getUsername(requests):
+
+    data = requests.data
+    # program_id = data['program_id']
+    try:
+        program_id = 12
+        trainer = Trainer.objects.filter(
+            programs_created__contains=[program_id])
+
+        return Response(trainer[0].user.username)
+
+    except Exception as e:
+        return Response(None, status=204)
