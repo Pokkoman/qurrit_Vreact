@@ -123,6 +123,6 @@ def user_profile(requests):
             'last_name': user.last_name,
             'programs': trainer.programs_created}
     except Exception as e:
-        return Response(NULL)
+        return Response(None)
 
     return Response(response)
