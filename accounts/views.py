@@ -1,4 +1,5 @@
 
+from asyncio.windows_events import NULL
 from django.http import response
 from django.http.response import HttpResponse
 from django.shortcuts import render
@@ -107,3 +108,23 @@ def user_email_check(requests):
     check_list = User.objects.values('username', 'email')
 
     return Response(check_list)
+
+
+@api_view(['GET'])
+def user_profile(requests):
+
+    data = requests.data
+    username = data['username']
+
+    try:
+        user = User.objects.get(username=username)
+        trainer = Trainer.objects.get(user=user)
+
+        response = {
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'programs': trainer.programs_created}
+    except Exception as e:
+        return Response(NULL)
+
+    return Response(response)
