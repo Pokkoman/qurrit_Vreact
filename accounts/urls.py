@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf.urls import url
 from django.urls.resolvers import URLPattern
-from . import views
+from accounts.views import views
 
 urlpatterns = [
     path('register', views.register, name='register'),
