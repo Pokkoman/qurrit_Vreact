@@ -1,5 +1,3 @@
-
-from asyncio.windows_events import NULL
 from django.http import response
 from django.http.response import HttpResponse
 from django.shortcuts import render
