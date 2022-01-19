@@ -110,21 +110,21 @@ def user_email_check(requests):
     return Response(check_list)
 
 
-@api_view(['GET'])
-def user_profile(requests):
+# @api_view(['GET'])
+# def user_profile(requests):
 
-    data = requests.data
-    username = data['username']
+#     data = requests.data
+#     username = data['username']
 
-    try:
-        user = User.objects.get(username=username)
-        trainer = Trainer.objects.get(user=user)
+#     try:
+#         user = User.objects.get(username=username)
+#         trainer = Trainer.objects.get(user=user)
 
-        response = {
-            'first_name': user.first_name,
-            'last_name': user.last_name,
-            'programs': trainer.programs_created}
-    except Exception as e:
-        return Response(NULL)
+#         response = {
+#             'first_name': user.first_name,
+#             'last_name': user.last_name,
+#             'programs': trainer.programs_created}
+#     except Exception as e:
+#         return Response(NULL)
 
-    return Response(response)
+#     return Response(response)
