@@ -135,9 +135,8 @@ def user_profile(requests):
 def getUsername(requests):
 
     data = requests.data
-    # program_id = data['program_id']
+    program_id = data['program_id']
     try:
-        program_id = 12
         trainer = Trainer.objects.filter(
             programs_created__contains=[program_id])
 
