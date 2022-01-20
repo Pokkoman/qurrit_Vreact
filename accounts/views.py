@@ -131,7 +131,7 @@ def user_profile(requests):
     return Response(response)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def getUsername(requests):
 
     data = requests.data
