@@ -111,7 +111,7 @@ def user_email_check(requests):
     return Response(check_list)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def user_profile(requests):
 
     data = requests.data

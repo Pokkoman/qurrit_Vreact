@@ -1,32 +1,105 @@
 
+from charset_normalizer import api
+from django.http import response
 from django.shortcuts import render
 import razorpay
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from accounts.models import Customer, Trainer
 from api.models import Workout, Program
+import json
+from .models import Order
 
 # Create your views here.
 
 
 @api_view(['POST'])
 def create_payment(requests):
+
     try:
         data = requests.data
 
+        program_id = data['programId']
+        user_id = data["userId"]
+
         program = Program.objects.get(id=data['programId'])
-        if program.cost == 0:
-            cost = 0
-        else:
-            cost = program.cost
 
-        customer = Customer.objects.get(id=data['userId'])
-        customer.programs_bought.append(data['programId'])
-        customer.save()
+        cost = program.cost
 
-        return Response({
-        })
+        client = razorpay.Client(
+            auth=("rzp_test_P0KpU2wi1sqrm9", "2xYnfOIcCBux1TlBRM99Ebvy"))
+
+        data = {"amount": cost*100, "currency": "INR"}
+        payment = client.order.create(data=data)
+
+        response_data = {
+            'payment': payment,
+            'programId': program_id,
+            'userId': user_id
+        }
+
+        ord_id = payment['id']
+
+        order = Order.objects.create(
+            order_id=ord_id,
+            program_id=program_id,
+            user_id=user_id
+        )
+
+        order.save()
+
+        return Response(response_data, status=200)
 
     except Exception as e:
         print(e)
-        return Response(str(e))
+        return Response(str(e), status=422)
+
+
+@api_view(['POST'])
+def successfulPayment(requests):
+    res = json.loads(requests.data["response"])
+
+    print(res)
+
+    ord_id = ""
+    raz_pay_id = ""
+    raz_signature = ""
+
+    # res.keys() will give us list of keys in res
+    for key in res.keys():
+        if key == 'razorpay_order_id':
+            ord_id = res[key]
+        elif key == 'razorpay_payment_id':
+            raz_pay_id = res[key]
+        elif key == 'razorpay_signature':
+            raz_signature = res[key]
+
+    data = {
+        'razorpay_order_id': ord_id,
+        'razorpay_payment_id': raz_pay_id,
+        'razorpay_signature': raz_signature
+    }
+
+    client = razorpay.Client(
+        auth=("rzp_test_P0KpU2wi1sqrm9", "2xYnfOIcCBux1TlBRM99Ebvy"))
+
+    check = client.utility.verify_payment_signature(data)
+
+    if check is not None:
+        print("Redirect to error url or error page")
+        return Response({'error': 'Something went wrong'}, status=204)
+
+    order = Order.objects.get(order_id=ord_id)
+
+    userId = order.user_id
+    programId = order.program_id
+
+    customer = Customer.objects.get(id=userId)
+    customer.programs_bought.append(programId)
+    customer.save()
+
+    trainer = Trainer.objects.filter(
+        programs_created__contains=[programId])
+    print(trainer)
+
+    return Response(status=200)
