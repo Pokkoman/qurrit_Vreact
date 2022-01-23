@@ -144,3 +144,36 @@ def getUsername(requests):
 
     except Exception as e:
         return Response(None, status=204)
+
+
+@api_view(['POST'])
+def getProgramsPurchased(requests):
+
+    data = requests.data
+    username = data['username']
+
+    usercheck = User.objects.get(username=username)
+
+    try:
+        userdata_customer = Customer.objects.get(user=usercheck)
+    except Customer.DoesNotExist:
+        userdata_customer = None
+
+    try:
+        userdata_trainer = Trainer.objects.get(user=usercheck)
+    except Trainer.DoesNotExist:
+        userdata_trainer = None
+
+    if userdata_customer is not None:
+        response = {
+            'user_type': 'Customer',
+            'programs_bought': userdata_customer.programs_bought
+        }
+
+    if userdata_trainer is not None:
+        response = {
+            'user_type': 'Trainer',
+            'programs_bought': userdata_trainer.programs_created
+        }
+
+    return Response(response)

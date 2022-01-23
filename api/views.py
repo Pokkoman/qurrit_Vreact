@@ -71,28 +71,41 @@ def search(requests, name):
 def createProgram(requests):
 
     data = requests.data
-    print(data)
-    trainer_id = data[0]['trainer_id']
+
+    trainer_id = data['trainerId']
     new_program = Program.objects.create(
-        program_name=data[0]['program_name'],
-        trainer_name=data[0]['trainer_name'],
-        duration=data[0]['duration'],
-        cost=data[0]['cost'],
+        program_name=data['programName'],
+        trainer_name=data['trainerName'],
+        duration=data['duration'],
+        cost=data['cost'],
 
     )
     day = 1
-    for workout in data[1:]:
-        print(workout)
+    for workout in data['workoutList']:
+
+        exercise_id = []
+        sets = []
+        reps = []
+        rests = []
+        for exercise in workout['exerciseList']:
+            exercise_id.append(exercise['exerciseId'])
+            sets.append(exercise['sets'])
+            reps.append(exercise["reps"])
+            rests.append(exercise['rest'])
+
         new_workout = Workout.objects.create(
             program_id=new_program,
-            name=workout['name'],
-            exercise_id=workout['exercise_id'],
-            sets=workout['sets'],
-            reps=workout['reps'],
-            rest=workout['rest'],
+            name=workout['workoutName'],
+            exercise_id=exercise_id,
+            sets=sets,
+            reps=reps,
+            rest=rests,
             day=day
         )
         day += 1
+
+        new_workout.save()
+        new_program.save()
 
     trainer = Trainer.objects.all().get(id=trainer_id)
     trainer.programs_created.append(new_program.id)
