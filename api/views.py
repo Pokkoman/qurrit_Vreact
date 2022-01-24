@@ -78,6 +78,7 @@ def createProgram(requests):
         trainer_name=data['trainerName'],
         duration=data['duration'],
         cost=data['cost'],
+        image=data['imageURL']
 
     )
     day = 1
