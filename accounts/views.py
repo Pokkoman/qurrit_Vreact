@@ -151,8 +151,9 @@ def getProgramsPurchased(requests):
 
     data = requests.data
     username = data['username']
+    id = data['id']
 
-    usercheck = User.objects.get(username=username)
+    usercheck = User.objects.get(username=username, id=id)
 
     try:
         userdata_customer = Customer.objects.get(user=usercheck)

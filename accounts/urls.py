@@ -10,7 +10,7 @@ urlpatterns = [
     path('logout', views.userlogout, name='logout'),
     path('profile', views.user_profile, name='user_profile'),
     path('getusername', views.getUsername, name='username_from_programID'),
-    path('getPrograms', views.getProgramsPurchased, name='programs purchased')
+    path('getprograms', views.getProgramsPurchased, name='programs purchased')
 
 
 ]
