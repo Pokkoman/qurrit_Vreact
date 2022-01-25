@@ -23,7 +23,6 @@ def register(requests):
     email = requests.data['email']
     first_name = requests.data['first_name']
     last_name = requests.data['last_name']
-    image = requests.data['imageURL']
 
     if requests.data['user_type'] == 'Customer':
         user = User.objects.create_user(
@@ -34,7 +33,7 @@ def register(requests):
             last_name=last_name,
         )
         customer = Customer.objects.create(
-            user=user, programs_bought=[0], image=image)
+            user=user, programs_bought=[0])
         customer.save()
     elif requests.data['user_type'] == 'Trainer':
         user = User.objects.create_user(
@@ -45,7 +44,7 @@ def register(requests):
             last_name=last_name,)
 
         trainer = Trainer.objects.create(
-            user=user, programs_created=[0], image=image)
+            user=user, programs_created=[0])
         trainer.save()
 
     return HttpResponse('hello')
