@@ -1,4 +1,5 @@
 from modulefinder import ReplacePackage
+import re
 from django.http import response
 from django.http.response import HttpResponse
 from django.shortcuts import render
@@ -147,7 +148,7 @@ def getUsername(requests):
         return Response(trainer[0].user.username)
 
     except Exception as e:
-        return Response(None, status=204)
+        return Response(str(e), status=204)
 
 
 @api_view(['POST'])
@@ -182,3 +183,58 @@ def getProgramsPurchased(requests):
         }
 
     return Response(response)
+
+
+@api_view(['POST'])
+def resetpassword(requests):
+
+    data = requests.data
+    id = data["id"]
+    new_password = data['new_password']
+
+    try:
+
+        user = User.objects.get(id=id)
+
+        user.set_password(new_password)
+        user.save()
+
+    except Exception as e:
+        return Response(str(e), status=500)
+
+    return Response(status=200)
+
+
+@api_view(["POST"])
+def updateprofile(requests):
+
+    data = requests.data
+    id = data['id']
+    image_url = data["url"]
+
+    usercheck = User.objects.get(id=id)
+
+    try:
+
+        try:
+            userdata_customer = Customer.objects.get(user=usercheck)
+        except Customer.DoesNotExist:
+            userdata_customer = None
+
+        try:
+            userdata_trainer = Trainer.objects.get(user=usercheck)
+        except Trainer.DoesNotExist:
+            userdata_trainer = None
+
+        if userdata_customer is not None:
+            userdata_customer.image = image_url
+            userdata_customer.save()
+
+        if userdata_trainer is not None:
+            userdata_trainer.image = image_url
+            userdata_trainer.save()
+
+    except Exception as e:
+        return Response(str(e), status=500)
+
+    return Response(status=200)
