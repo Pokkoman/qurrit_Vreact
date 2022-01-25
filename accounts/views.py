@@ -75,6 +75,7 @@ def userlogin(requests):
 
         if userdata_customer is not None:
             data = {
+                'user_id': usercheck.id,
                 'id': userdata_customer.id,
                 'username': userdata_customer.user.username,
                 'first_name': userdata_customer.user.first_name,
@@ -84,6 +85,7 @@ def userlogin(requests):
             }
         elif userdata_trainer is not None:
             data = {
+                'user_id': usercheck.id,
                 'id': userdata_trainer.id,
                 'username': userdata_trainer.user.username,
                 'first_name': userdata_trainer.user.first_name,
