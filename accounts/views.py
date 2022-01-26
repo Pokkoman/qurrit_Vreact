@@ -197,12 +197,13 @@ def resetpassword(requests):
         user = User.objects.get(id=id)
 
         user.set_password(new_password)
+        print(user)
         user.save()
 
     except Exception as e:
         return Response(str(e), status=500)
 
-    return Response(status=200)
+    return Response("Password reset", status=200)
 
 
 @api_view(["POST"])
@@ -237,4 +238,4 @@ def updateprofile(requests):
     except Exception as e:
         return Response(str(e), status=500)
 
-    return Response(status=200)
+    return Response("Image Changed", status=200)
