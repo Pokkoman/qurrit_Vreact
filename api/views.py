@@ -58,6 +58,14 @@ def getExercises(requests):
 
 
 @api_view(['GET'])
+def searchall(requests):
+    program_list = Program.objects.all()
+    program_list_serialized = ProgramSerializer(program_list, many=True)
+
+    return Response(program_list_serialized.data)
+
+
+@api_view(['GET'])
 def search(requests, name):
 
     program_list = Program.objects.all().filter(program_name__icontains=name)
@@ -112,4 +120,4 @@ def createProgram(requests):
     trainer.programs_created.append(new_program.id)
     trainer.save()
 
-    return HttpResponse("hello")
+    return HttpResponse("Program created")

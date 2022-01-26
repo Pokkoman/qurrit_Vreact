@@ -1,5 +1,4 @@
-from modulefinder import ReplacePackage
-import re
+
 from django.http import response
 from django.http.response import HttpResponse
 from django.shortcuts import render
@@ -81,7 +80,8 @@ def userlogin(requests):
                 'first_name': userdata_customer.user.first_name,
                 'last_name': userdata_customer.user.last_name,
                 'user_type': "Customer",
-                'programs': userdata_customer.programs_bought
+                'programs': userdata_customer.programs_bought,
+                'image': userdata_customer.image
             }
         elif userdata_trainer is not None:
             data = {
@@ -91,7 +91,8 @@ def userlogin(requests):
                 'first_name': userdata_trainer.user.first_name,
                 'last_name': userdata_trainer.user.last_name,
                 'user_type': "Trainer",
-                'programs': userdata_trainer.programs_created
+                'programs': userdata_trainer.programs_created,
+                'image': userdata_trainer.image
             }
 
         print("user logged in")
@@ -173,13 +174,15 @@ def getProgramsPurchased(requests):
     if userdata_customer is not None:
         response = {
             'user_type': 'Customer',
-            'programs_bought': userdata_customer.programs_bought
+            'programs_bought': userdata_customer.programs_bought,
+            'image': userdata_customer.image
         }
 
     if userdata_trainer is not None:
         response = {
             'user_type': 'Trainer',
-            'programs_bought': userdata_trainer.programs_created
+            'programs_bought': userdata_trainer.programs_created,
+            'image': userdata_trainer.image
         }
 
     return Response(response)
