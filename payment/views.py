@@ -32,7 +32,7 @@ def create_payment(requests):
             check_trainer = Customer.objects.get(user=user)
 
         except Customer.DoesNotExist:
-            return Response("Trainer cant buy workouts", status=404)
+            return Response("Trainer cant buy workouts", status=204)
 
         client = razorpay.Client(
             auth=("rzp_test_P0KpU2wi1sqrm9", "2xYnfOIcCBux1TlBRM99Ebvy"))
@@ -94,8 +94,7 @@ def successfulPayment(requests):
     check = client.utility.verify_payment_signature(data)
 
     if check is not None:
-        print("Redirect to error url or error page")
-        return Response({'error': 'Something went wrong'}, status=204)
+        return Response('Something went wrong', status=204)
 
     order = Order.objects.get(order_id=ord_id)
 
