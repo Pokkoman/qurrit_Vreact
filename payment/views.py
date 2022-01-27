@@ -6,6 +6,7 @@ import razorpay
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from accounts.models import Customer, Trainer
+from django.contrib.auth.models import User
 from api.models import Workout, Program
 import json
 from .models import Order
@@ -25,6 +26,13 @@ def create_payment(requests):
         program = Program.objects.get(id=data['programId'])
 
         cost = program.cost
+
+        try:
+            user = User .objects.get(id=user_id)
+            check_trainer = Customer.objects.get(user=user)
+
+        except Customer.DoesNotExist:
+            return Response("Trainer cant buy workouts", status=404)
 
         client = razorpay.Client(
             auth=("rzp_test_P0KpU2wi1sqrm9", "2xYnfOIcCBux1TlBRM99Ebvy"))
