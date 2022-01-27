@@ -194,13 +194,15 @@ def resetpassword(requests):
     data = requests.data
     id = data["id"]
     new_password = data['new_password']
+    password = data['current_password']
 
     try:
 
         user = User.objects.get(id=id)
+        username = user.username
+        user = authenticate(requests, username=username, password=password)
 
         user.set_password(new_password)
-        print(user)
         user.save()
 
     except Exception as e:

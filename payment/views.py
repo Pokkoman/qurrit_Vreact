@@ -101,7 +101,9 @@ def successfulPayment(requests):
     userId = order.user_id
     programId = order.program_id
 
-    customer = Customer.objects.get(id=userId)
+    user = User.objects.get(id=userId)
+
+    customer = Customer.objects.get(user=user)
     customer.programs_bought.append(programId)
     customer.save()
 
