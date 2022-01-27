@@ -130,7 +130,8 @@ def user_profile(requests):
         response = {
             'first_name': user.first_name,
             'last_name': user.last_name,
-            'programs': trainer.programs_created}
+            'programs': trainer.programs_created,
+            'profile_image': trainer.image}
     except Exception as e:
         return Response(None, status=204)
 
