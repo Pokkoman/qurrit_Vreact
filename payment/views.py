@@ -1,4 +1,5 @@
 
+from random import triangular
 from charset_normalizer import api
 from django.http import response
 from django.shortcuts import render
@@ -102,13 +103,19 @@ def successfulPayment(requests):
     programId = order.program_id
 
     user = User.objects.get(id=userId)
+    program = Program.objects.get(id=programId)
+    cost = program.cost
 
     customer = Customer.objects.get(user=user)
     customer.programs_bought.append(programId)
     customer.save()
 
     trainer = Trainer.objects.filter(
-        programs_created__contains=[programId])
+        programs_created__contains=[programId])[0]
+
     print(trainer)
+
+    trainer.wallet += cost
+    trainer.save()
 
     return Response(status=200)
