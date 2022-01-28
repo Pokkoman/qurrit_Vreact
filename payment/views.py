@@ -110,8 +110,8 @@ def successfulPayment(requests):
     customer.programs_bought.append(programId)
     customer.save()
 
-    trainer = Trainer.objects.filter(
-        programs_created__contains=[programId])[0]
+    trainer = Trainer.objects.get(
+        programs_created__contains=[programId])
 
     print(trainer)
 

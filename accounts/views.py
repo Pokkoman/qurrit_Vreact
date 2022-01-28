@@ -144,10 +144,10 @@ def getUsername(requests):
     data = requests.data
     program_id = data['program_id']
     try:
-        trainer = Trainer.objects.filter(
+        trainer = Trainer.objects.get(
             programs_created__contains=[program_id])
 
-        return Response(trainer[0].user.username)
+        return Response(trainer.user.username)
 
     except Exception as e:
         return Response(str(e), status=204)
