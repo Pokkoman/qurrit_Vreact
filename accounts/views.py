@@ -184,7 +184,7 @@ def getProgramsPurchased(requests):
             'user_type': 'Trainer',
             'programs_bought': userdata_trainer.programs_created,
             'image': userdata_trainer.image,
-            'wallet': userdata_customer.wallet
+            'wallet': userdata_trainer.wallet
         }
 
     return Response(response)
