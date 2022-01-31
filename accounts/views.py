@@ -183,7 +183,8 @@ def getProgramsPurchased(requests):
         response = {
             'user_type': 'Trainer',
             'programs_bought': userdata_trainer.programs_created,
-            'image': userdata_trainer.image
+            'image': userdata_trainer.image,
+            'wallet': userdata_customer.wallet
         }
 
     return Response(response)
