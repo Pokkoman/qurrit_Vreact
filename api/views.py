@@ -86,7 +86,8 @@ def createProgram(requests):
         trainer_name=data['trainerName'],
         duration=data['duration'],
         cost=data['cost'],
-        image=data['imageURL']
+        image=data['imageURL'],
+        description=data['description']
 
     )
     day = 1
@@ -121,3 +122,25 @@ def createProgram(requests):
     trainer.save()
 
     return HttpResponse("Program created")
+
+
+@api_view(['GET'])
+def addExercise(requests):
+
+    f = open(r"C:\Users\user\Downloads\qurrit - Exercises.csv", "r")
+
+    data = f.read()
+
+    splito = data.split("\n")
+
+    for i in splito:
+        exercise, muscle = i.split(",")
+
+        exercise_id = Exercise.objects.create(
+            name=str(exercise),
+            target_muscles=[str(muscle)]
+        )
+
+        print(exercise_id)
+
+    return Response("Check if added")

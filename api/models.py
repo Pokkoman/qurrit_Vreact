@@ -27,6 +27,7 @@ class Program(models.Model):
     duration = models.IntegerField()
     cost = models.IntegerField()
     image = models.URLField(max_length=200, blank=True)
+    description = models.CharField(max_length=5000, blank=True)
 
 
 class Workout(models.Model):

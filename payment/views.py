@@ -1,5 +1,3 @@
-
-from random import triangular
 from charset_normalizer import api
 from django.http import response
 from django.shortcuts import render

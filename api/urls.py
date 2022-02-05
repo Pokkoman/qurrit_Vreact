@@ -13,6 +13,8 @@ urlpatterns = [
     path('programs/search/<str:name>', views.search, name='search'),
     path('programs/<str:id>', views.getWorkouts, name='workout_list'),
     path('exercises', views.getExercises, name='exercise_list'),
+    path('addexercises', views.addExercise,
+         name='Added all exercises from csv'),
 
 
 ]
