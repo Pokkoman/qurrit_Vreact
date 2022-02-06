@@ -46,6 +46,8 @@ def register(requests):
         trainer = Trainer.objects.create(
             user=user, programs_created=[0])
         trainer.save()
+    else:
+        return Response("User creation error", status=400)
 
     return HttpResponse('hello')
 
