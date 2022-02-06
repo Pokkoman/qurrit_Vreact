@@ -34,7 +34,7 @@ def create_payment(requests):
             return Response("Trainer cant buy workouts", status=204)
 
         client = razorpay.Client(
-            auth=("rzp_test_P0KpU2wi1sqrm9", "2xYnfOIcCBux1TlBRM99Ebvy"))
+            auth=("rzp_live_mVIIEneiAN36tn", "xdp4XcZqydO69ESPF0wc5DdV"))
 
         data = {"amount": cost*100, "currency": "INR"}
         payment = client.order.create(data=data)
@@ -88,7 +88,7 @@ def successfulPayment(requests):
     }
 
     client = razorpay.Client(
-        auth=("rzp_test_P0KpU2wi1sqrm9", "2xYnfOIcCBux1TlBRM99Ebvy"))
+        auth=("rzp_live_mVIIEneiAN36tn", "xdp4XcZqydO69ESPF0wc5DdV"))
 
     check = client.utility.verify_payment_signature(data)
 
