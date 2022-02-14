@@ -1,4 +1,5 @@
 from typing import Callable
+from unicodedata import name
 from django.core.exceptions import MultipleObjectsReturned
 from django.db import models
 from django.db.models.base import Model
@@ -13,6 +14,9 @@ class Exercise(models.Model):
 
     name = models.CharField(max_length=100)
     target_muscles = ArrayField(models.CharField(max_length=50))
+
+    def __str__(self):
+        return self.name
 
 
 class MuscleList(models.Model):
@@ -29,6 +33,9 @@ class Program(models.Model):
     image = models.URLField(max_length=200, blank=True)
     description = models.CharField(max_length=5000, blank=True)
 
+    def __str__(self):
+        return self.program_name
+
 
 class Workout(models.Model):
 
@@ -39,3 +46,6 @@ class Workout(models.Model):
     sets = ArrayField(models.IntegerField())
     reps = ArrayField(models.IntegerField())
     rest = ArrayField(models.IntegerField())
+
+    def __str__(self):
+        return self.name
